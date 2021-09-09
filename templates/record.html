@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}RECORD{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/camera.css">
+{% endblock %}
+
+{% block content %}
+<!--<h1>sample. {{ file_id }} : {{ data }}</h1>
+<button id="sample_header">Display header</button>-->
+
+<!-- 戻るボタン -->
+
+<div id="dataMessage">
+  <div class="cont" >
+    <div class="cont-inner">{{ file_id }} : {{ data }}</div>
+  </div>
+</div>
+
+<div id="confirmArea">
+  <h5><録画内容></h5>
+  <video id="confirm">Error.</video>
+  <p>&emsp;録画内容が正しければ、<span style="font-color: bule;">保存する</span>で保存し、
+    下のアップロードフォーム(
+  <button id="reRecordButton" class="btn btn-outline-secondary">撮り直す</button>
+  <button id="downloadButton" class="btn btn-primary" style="margin-left: 10px;">保存する</button>
+</div>
+
+<video id="camera">Video stream not available.</video>
+<br />
+
+<div class="camera-button-area" id="cameraButtonArea">
+  <div class="button-circle">
+    <button class="button-animation" id="cameraOnButton"></button>
+    <button class="button-animation cameraOn" id="cameraOffButton"></button>
+  </div>
+</div>
+
+<div id="uploadreRecordButton">
+  <form method="post" action="{{ url_for('save_tweet', file_id=file_id) }}" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="video"><h5><アップロード内容></h5></label>
+    <input type="file" class="form-control-file" name="video" id="video" aria-describedby="videoHelp" accept="video/*" required>
+    <small id="videoHelp" class="form-text text-muted">アップロードはよく内容を確認してからお願いします。</small>
+  </div>
+
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">アップロード</button>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">本当によろしいですか?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          アップロード内容は正しいですか?<br />
+          (アップロード完了まで少し時間がかかることがありますので、アプリを閉じずにお待ちください。)
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+          <button type="submit" class="btn btn-primary">確認</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio id="sound_on" preload="auto" src="/static/sound/video_on.mp3">
+</audio>
+<audio id="sound_off" preload="auto" src="/static/sound/video_off.mp3">
+</audio>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="/static/scripts/camera.js"></script>
+{% endblock %}
